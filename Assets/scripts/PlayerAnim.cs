@@ -25,9 +25,14 @@ public class PlayerAnim : MonoBehaviour
             anim.SetBool("isRunning", false);
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
-            anim.SetTrigger("Jump");
+            anim.SetBool("isJumping", true );
+        }
+
+        if (Input.GetKey(KeyCode.Mouse0)) 
+        {
+            anim.SetTrigger("throw");
         }
 
     }

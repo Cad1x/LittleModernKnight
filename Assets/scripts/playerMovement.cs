@@ -49,16 +49,17 @@ public class playerMovement : MonoBehaviour
         //{
         //    rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         //}
+animator.SetFloat("yVelocity", rb.velocity.y);
 
-
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.UpArrow))
             Jump();
 
-
-        if (Input.GetKey(KeyCode.UpArrow) && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }
+        
+        //if (Input.GetKey(KeyCode.UpArrow) && rb.velocity.y > 0f)
+        //{
+        //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        //}
+        
 
 
         Flip();
@@ -74,6 +75,8 @@ public class playerMovement : MonoBehaviour
         if (colliders.Length > 0)
         {
             isGrounded = true;
+
+            animator.SetBool("isJumping", !isGrounded);
             if (!wasGrounded)
             {
                 availableJumps = totalJumps;
