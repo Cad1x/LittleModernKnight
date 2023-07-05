@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 7452d677fca95174fbd6854427c5dd4f
+guid: f296174d37bb31841bccf9b56d811f9d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6991849013916550155
-    second: Death_0
+      213: -6717884257390833292
+    second: Shield_0
   - first:
-      213: -276728812324164698
-    second: Death_1
+      213: -7947067082740497745
+    second: Shield_1
   - first:
-      213: 3156895337291164288
-    second: Death_2
+      213: -4098029715399502762
+    second: Shield_2
   - first:
-      213: 1400002288684528572
-    second: Death_3
+      213: -407368442477547055
+    second: Shield_3
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -153,7 +153,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Death_0
+      name: Shield_0
       rect:
         serializedVersion: 2
         x: 0
@@ -167,14 +167,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f04e157dbc9af04da4aae12e9c61bde
-      internalID: 6991849013916550155
+      spriteID: cb749f073aa6a97468a005a99f04dcf6
+      internalID: -6717884257390833292
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_1
+      name: Shield_1
       rect:
         serializedVersion: 2
         x: 150
@@ -188,14 +188,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c2d54b6f85b288408969d542767dbaf
-      internalID: -276728812324164698
+      spriteID: 42f1f3fea089248479a9f3bfc037116a
+      internalID: -7947067082740497745
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_2
+      name: Shield_2
       rect:
         serializedVersion: 2
         x: 300
@@ -209,14 +209,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cd139d5cc507634a9a0986b18270586
-      internalID: 3156895337291164288
+      spriteID: 969fc3136cb61584781ea82e2ffdf0c8
+      internalID: -4098029715399502762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_3
+      name: Shield_3
       rect:
         serializedVersion: 2
         x: 450
@@ -230,8 +230,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f91c38a0bf382841b54ad374e0044ac
-      internalID: 1400002288684528572
+      spriteID: 90383c25fff734d47a94a53a2b679bd5
+      internalID: -407368442477547055
       vertices: []
       indices: 
       edges: []
@@ -247,10 +247,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Death_1: -276728812324164698
-      Death_0: 6991849013916550155
-      Death_2: 3156895337291164288
-      Death_3: 1400002288684528572
+      Shield_0: -6717884257390833292
+      Shield_2: -4098029715399502762
+      Shield_3: -407368442477547055
+      Shield_1: -7947067082740497745
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
