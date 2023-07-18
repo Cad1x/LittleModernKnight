@@ -5,7 +5,8 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
-
+    [SerializeField]
+    float followDistance = 5f;
     public Transform target;
     public float speed = 200f;
     public float nextWaypointDistance = 3f;
@@ -31,8 +32,8 @@ public class EnemyAI : MonoBehaviour
 
     void UpdatePath()
     {
-        if(seeker.IsDone())
-           seeker.StartPath(rb.position, target.position, OnPathComplete);
+        if (seeker.IsDone())
+            seeker.StartPath(rb.position, target.position, OnPathComplete);
 
     }
 
@@ -48,23 +49,33 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (path==null)
+        if (path == null)
             return;
-        
 
-        if (currentWaypoint>= path.vectorPath.Count)
+        if (currentWaypoint >= path.vectorPath.Count)
         {
-            reachedEndOfPath=true;
+            reachedEndOfPath = true;
             return;
         }
         else
         {
-            reachedEndOfPath=false;
+            reachedEndOfPath = false;
         }
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        Vector2 force = direction * speed * Time.deltaTime;
 
-        rb.AddForce(force); 
+        float distanceToTarget = Vector2.Distance(rb.position, target.position);
+        if (distanceToTarget <= followDistance)
+        {
+            // Przeciwnik jest wystarczaj¹co blisko, aby pod¹¿aæ za nami
+            Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+            Vector2 force = direction * speed * Time.deltaTime;
+
+            rb.AddForce(force);
+        }
+        else
+        {
+            // Przeciwnik jest zbyt daleko, aby pod¹¿aæ za nami
+            rb.velocity = Vector2.zero;
+        }
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
         if (distance < nextWaypointDistance)
