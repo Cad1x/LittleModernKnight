@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Key
   - Item
+  - Player1
   layers:
   - Default
   - TransparentFX
