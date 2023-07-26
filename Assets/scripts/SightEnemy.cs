@@ -43,7 +43,7 @@ public class SightEnemy : MonoBehaviour
                 if (waitTimer >= waitTime)
                 {
                     isWaiting = false;
-                    waitTimer = 0f;
+                    waitTimer = 3f;
                     MoveToNextPoint();
                 }
             }
