@@ -9,8 +9,7 @@ public class SightEnemy : MonoBehaviour
     int idChangeValue = 1;
     public float speed = 2;
     public float waitTime = 1f;
-    bool isWaiting = false;
-    float waitTimer = 0f;
+
 
     public float agroRange = 5f;
     public float chaseSpeed = 4f;
@@ -32,21 +31,8 @@ public class SightEnemy : MonoBehaviour
             ChasePlayer();
         }
         else
-        {
-            if (!isWaiting)
-            {
-                MoveToNextPoint();
-            }
-            else
-            {
-                waitTimer += Time.deltaTime;
-                if (waitTimer >= waitTime)
-                {
-                    isWaiting = false;
-                    waitTimer = 3f;
-                    MoveToNextPoint();
-                }
-            }
+        {        
+            MoveToNextPoint();
         }
     }
 
@@ -74,9 +60,9 @@ public class SightEnemy : MonoBehaviour
 
         if (distance < 0.1f)
         {
-            nextID  ++;
+            nextID++;
 
-            if (nextID   >= points.Count)
+            if (nextID >= points.Count)
                 nextID = 0;
         }
     }
@@ -98,20 +84,5 @@ public class SightEnemy : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            ChasePlayer();
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            transform.position = originalPosition;
-            isWaiting = true;
-        }
-    }
+    
 }
