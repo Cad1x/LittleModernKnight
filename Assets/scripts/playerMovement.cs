@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class playerMovement : MonoBehaviour
     bool monsterjump;
     public int totalJumps;
     int availableJumps;
-    public float gravity = -5f;
+    public float gravity = -10f;
     public float gravityScale = 1;
     bool multipleJump;
     bool monsterJump;
@@ -126,23 +127,26 @@ animator.SetFloat("yVelocity", rb.velocity.y);
 
             rb.velocity = Vector2.up * Mathf.Sqrt(jumpPower * -2f * (gravity * gravityScale));
         }
-        else
-        {
-            if (monsterJump)
-            {
-                multipleJump = true;
-                availableJumps--;
+        //else
+        //{
+        //    if (monsterJump)
+        //    {
+        //        multipleJump = true;
+        //        availableJumps--;
 
-                rb.velocity = Vector2.up * jumpPower;
-            }
+        //        rb.velocity = Vector2.up * jumpPower;
+        //    }
 
-            if (multipleJump && availableJumps > 0)
-            {
-                availableJumps--;
+        //    if (multipleJump && availableJumps > 0)
+        //    {
+        //        availableJumps--;
 
-                rb.velocity = Vector2.up * jumpPower;
-            }
-        }
+        //        rb.velocity = Vector2.up * jumpPower;
+        //    }
+        //}
     }
+
+    
+
 
 }
