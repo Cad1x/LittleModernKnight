@@ -9,17 +9,17 @@ public class playerMovement : MonoBehaviour
     public float speed = 3f;
     private float jumpPower = 16f;
     private bool isFacingRight = true;
-    bool monsterjump;
     public int totalJumps;
-    int availableJumps;
     public float gravity = -10f;
     public float gravityScale = 1;
-    bool multipleJump;
-    bool monsterJump;
-
+    private Vector3 platformVelocity;
 
     const float groundCheckRadius = 0.2f;
     bool isGrounded = false;
+
+    public MovingPlatform currentPlatform; // Dodaj nowe pole dla obiektu MovingPlatform
+[SerializeField] private Transform groundCheckPos; // Zmieñ nazwê pola na groundCheckPos
+
 
     public Animator animator;
 
@@ -27,16 +27,10 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
-    IEnumerator MonsterJumpDelay()
-    {
-        monsterJump = true;
-        yield return new WaitForSeconds(0.2f);
-        monsterJump = false;
-    }
 
+    
     void Awake()
     {
-        availableJumps = totalJumps;
 
         rb = GetComponent<Rigidbody2D>();
     }
@@ -46,24 +40,15 @@ public class playerMovement : MonoBehaviour
         animator.SetFloat("Horizontal", Input.GetAxis("Horizontal")); 
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        //if (Input.GetKey(KeyCode.Space) && (isGrounded=false))
-        //{
-        //    rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-        //}
-animator.SetFloat("yVelocity", rb.velocity.y);
+
+        animator.SetFloat("yVelocity", rb.velocity.y);
 
         if (Input.GetKey(KeyCode.UpArrow))
             Jump();
 
-        
-        //if (Input.GetKey(KeyCode.UpArrow) && rb.velocity.y > 0f)
-        //{
-        //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        //}
-        
-
-
         Flip();
+
+
 
     }
 
@@ -78,24 +63,12 @@ animator.SetFloat("yVelocity", rb.velocity.y);
             isGrounded = true;
 
             animator.SetBool("isJumping", !isGrounded);
-            if (!wasGrounded)
-            {
-                availableJumps = totalJumps;
-                multipleJump = false;
 
-                //AudioManager.instance.PlaySFX("landing");
-            }
-
-
-            
         }
         else
         {
-            //Un-parent the transform
             transform.parent = null;
 
-            if (wasGrounded)
-                StartCoroutine(MonsterJumpDelay());
         }
     } 
 
@@ -122,28 +95,10 @@ animator.SetFloat("yVelocity", rb.velocity.y);
     {
         if (isGrounded)
         {
-            multipleJump = true;
-            availableJumps--;
-
+           
             rb.velocity = Vector2.up * Mathf.Sqrt(jumpPower * -2f * (gravity * gravityScale));
         }
-        //else
-        //{
-        //    if (monsterJump)
-        //    {
-        //        multipleJump = true;
-        //        availableJumps--;
 
-        //        rb.velocity = Vector2.up * jumpPower;
-        //    }
-
-        //    if (multipleJump && availableJumps > 0)
-        //    {
-        //        availableJumps--;
-
-        //        rb.velocity = Vector2.up * jumpPower;
-        //    }
-        //}
     }
 
     
