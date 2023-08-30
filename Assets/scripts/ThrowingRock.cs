@@ -37,4 +37,6 @@ public class ThrowingRock : MonoBehaviour
         Rigidbody2D stoneRigidbody = stone.GetComponent<Rigidbody2D>();
         stoneRigidbody.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
     }
+
+    
 }

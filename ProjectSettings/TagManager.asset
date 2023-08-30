@@ -8,6 +8,10 @@ TagManager:
   - Item
   - Player1
   - NextLVL
+  - Rock
+  - WeakPoint
+  - Coin
+  - Upgrade
   layers:
   - Default
   - TransparentFX
