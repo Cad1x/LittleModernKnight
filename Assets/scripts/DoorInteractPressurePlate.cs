@@ -7,7 +7,7 @@ public class DoorInteractPressurePlate : MonoBehaviour
     [SerializeField] private GameObject doorGameObject;
     private IDoor door;
     private float timer;
-
+    private CoinCounter cc;
     private void Awake()
     {
         door = doorGameObject.GetComponent<IDoor>();
