@@ -43,7 +43,7 @@ public class playerMovement : MonoBehaviour
 
         animator.SetFloat("yVelocity", rb.velocity.y);
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             Jump();
 
         Flip();

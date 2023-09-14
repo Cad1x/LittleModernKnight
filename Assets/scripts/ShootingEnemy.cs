@@ -22,19 +22,19 @@ public class ShootingEnemy : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player1");
     }
 
     private void Update()
     {
-        if (Vector2.Distance(transform.position, target.position) < minDistance)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, target.position, -speed * Time.deltaTime);
-        }
+        //if (Vector2.Distance(transform.position, target.position) < minDistance)
+        //{
+        //    transform.position = Vector2.MoveTowards(transform.position, target.position, -speed * Time.deltaTime);
+        //}
 
         distance = Vector2.Distance(transform.position, player.transform.position);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, triggerDist);
-        if (hit.collider != null && hit.collider.CompareTag("Player"))
+        if (hit.collider != null && hit.collider.CompareTag("Player1"))
         {
             timer += Time.deltaTime;
             if (timer > 2)
