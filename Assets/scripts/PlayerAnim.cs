@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnim : MonoBehaviour
@@ -27,10 +25,10 @@ public class PlayerAnim : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            anim.SetBool("isJumping", true );
+            anim.SetBool("isJumping", true);
         }
 
-        if (Input.GetKey(KeyCode.Mouse0)) 
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             anim.SetTrigger("throw");
         }

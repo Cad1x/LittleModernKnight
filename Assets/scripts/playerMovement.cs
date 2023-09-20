@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour
 {
@@ -18,7 +15,7 @@ public class playerMovement : MonoBehaviour
     bool isGrounded = false;
 
     public MovingPlatform currentPlatform; // Dodaj nowe pole dla obiektu MovingPlatform
-[SerializeField] private Transform groundCheckPos; // Zmieñ nazwê pola na groundCheckPos
+    [SerializeField] private Transform groundCheckPos; // Zmieñ nazwê pola na groundCheckPos
 
 
     public Animator animator;
@@ -28,7 +25,7 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
 
-    
+
     void Awake()
     {
 
@@ -37,7 +34,7 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
-        animator.SetFloat("Horizontal", Input.GetAxis("Horizontal")); 
+        animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         horizontal = Input.GetAxisRaw("Horizontal");
 
 
@@ -70,7 +67,7 @@ public class playerMovement : MonoBehaviour
             transform.parent = null;
 
         }
-    } 
+    }
 
     private void FixedUpdate()
     {
@@ -95,13 +92,13 @@ public class playerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-           
+
             rb.velocity = Vector2.up * Mathf.Sqrt(jumpPower * -2f * (gravity * gravityScale));
         }
 
     }
 
-    
+
 
 
 }

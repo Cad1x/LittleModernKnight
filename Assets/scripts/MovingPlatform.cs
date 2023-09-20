@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
@@ -13,16 +11,16 @@ public class MovingPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = points[startingPoints].position;    
+        transform.position = points[startingPoints].position;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Vector2.Distance(transform.position, points[i].position) <0.02f)
+        if (Vector2.Distance(transform.position, points[i].position) < 0.02f)
         {
             i++;
-            if (i==points.Length)
+            if (i == points.Length)
             {
                 i = 0;
             }
@@ -30,19 +28,20 @@ public class MovingPlatform : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, points[i].position, speed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player1"))
+        if (collision.CompareTag("Player1"))
         {
-            collision.transform.SetParent(transform);
+            collision.transform.parent = this.transform;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player1"))
+        if (collision.CompareTag("Player1"))
         {
-            collision.transform.SetParent(null);
+            collision.transform.parent = null;
         }
     }
 }

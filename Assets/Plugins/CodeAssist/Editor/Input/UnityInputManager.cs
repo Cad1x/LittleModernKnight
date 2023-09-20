@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -11,7 +10,7 @@ using System.Security.Cryptography;
 
 namespace Meryel.UnityCodeAssist.Editor.Input
 {
-    
+
 
     internal class UnityInputManager
     {
@@ -65,7 +64,7 @@ namespace Meryel.UnityCodeAssist.Editor.Input
                         }
                     }
                     break;
-                
+
             }
         }
 
@@ -203,7 +202,7 @@ namespace Meryel.UnityCodeAssist.Editor.Input
             else
             {
                 Serilog.Log.Debug("Converted file already exists at {Target}", convertedPath);
-            }    
+            }
 
             return convertedPath;
         }

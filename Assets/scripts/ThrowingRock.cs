@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ThrowingRock : MonoBehaviour
@@ -38,5 +36,5 @@ public class ThrowingRock : MonoBehaviour
         stoneRigidbody.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
     }
 
-    
+
 }

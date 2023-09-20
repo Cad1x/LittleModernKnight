@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class itemCollector : MonoBehaviour
@@ -20,7 +18,7 @@ public class itemCollector : MonoBehaviour
         if (collision.gameObject.CompareTag("Coin"))
         {
             Destroy(collision.gameObject);
-            coinCounter.currentCoins++; 
+            coinCounter.currentCoins++;
 
         }
     }

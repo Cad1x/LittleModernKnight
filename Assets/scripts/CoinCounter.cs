@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine;
 
 public class CoinCounter : MonoBehaviour
 {
-    
+
     public int currentCoins;
 
     public TMP_Text Text;
@@ -14,7 +11,7 @@ public class CoinCounter : MonoBehaviour
 
     public void Update()
     {
-        Text.text =  currentCoins.ToString();
+        Text.text = currentCoins.ToString();
     }
 
 

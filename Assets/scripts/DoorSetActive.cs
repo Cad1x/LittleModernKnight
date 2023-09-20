@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorSetActive : MonoBehaviour, IDoor
@@ -18,7 +16,7 @@ public class DoorSetActive : MonoBehaviour, IDoor
 
     public void ToogleDoor()
     {
-       isOpen = !isOpen;
+        isOpen = !isOpen;
         if (isOpen)
         {
             OpenDoor();

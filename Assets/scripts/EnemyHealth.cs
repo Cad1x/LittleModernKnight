@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -15,13 +13,13 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        if (currentHealth <=0)
+        if (currentHealth <= 0)
         {
             Destroy(gameObject);
         }

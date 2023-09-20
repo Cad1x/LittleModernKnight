@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stonePrefab: {fileID: 0}
-  throwForce: 12
+  throwForce: 9
 --- !u!114 &1447695714574993838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde6cb7fe9c040c4c8a78e79f22a653d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupRange: 0.2
+  pickupRange: 0.3
 --- !u!114 &1447695714574993840
 MonoBehaviour:
   m_ObjectHideFlags: 0

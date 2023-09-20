@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,7 +30,7 @@ public class SightEnemy : MonoBehaviour
             ChasePlayer();
         }
         else
-        {        
+        {
             MoveToNextPoint();
         }
     }
@@ -84,5 +83,5 @@ public class SightEnemy : MonoBehaviour
         }
     }
 
-    
+
 }
