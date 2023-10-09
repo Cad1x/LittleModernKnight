@@ -1,162 +1,248 @@
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class BehaviourTree : MonoBehaviour
 {
 
+    [SerializeField]
+    float followDistance = 5f;
+    public Transform target;
+    public float speed = 200f;
+    public float nextWaypointDistance = 3f;
 
-    public List<Transform> points;
-    public int nextID = 0;
-    int idChangeValue = 1;
-    public float speed = 2;
-    public float chaseSpeed = 5;
-    public float waitTime = 1f;
-    bool isWaiting = false;
-    float waitTimer = 0f;
+    public EyeChangeColor color;
+    public EnemyHealth enemyHealth;
+    public Transform escapePoint;
 
-    public float detectionRange = 5f;
-    public LayerMask playerLayer;
+    private bool isHealing = false;
+    private bool isAtEscapePoint = false;
+    private float healTimer = 0f;
+    private float healInterval = 1f;
 
-    bool Idle = false;
 
-    public Transform healingPoint;
-    public float escapeSpeed = 7f;
-    private EnemyHealth health;
-    private Animator animator;
-    private Transform player;
+    Path path;
 
-    private void Start()
+    public PlayerHealth playerHealth;
+
+    int currentWaypoint = 0;
+    bool reachedEndOfPath = false;
+
+
+    Seeker seeker;
+    Rigidbody2D rb;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        animator = GetComponent<Animator>();
-        // Zmieniono na tag "Player1"
-        player = GameObject.FindGameObjectWithTag("Player1").transform;
-    }
+        seeker = GetComponent<Seeker>();
+        rb = GetComponent<Rigidbody2D>();
 
-    private void Reset()
-    {
-        Init();
-    }
+        InvokeRepeating("UpdatePath", 0f, .5f);
 
-    void Init()
-    {
-        //Make box collider trigger
-        GetComponent<BoxCollider2D>().isTrigger = true;
-
-        //Create Root object
-        GameObject root = new GameObject(name + "_Root");
-        //Reset Position of Root to enemy object
-        root.transform.position = transform.position;
-        //Set enemy object as child of root
-        transform.SetParent(root.transform);
-        //Create Waypoints object
-        GameObject waypoints = new GameObject("Waypoints");
-        //Reset waypoints position to root        
-        //Make waypoints object child of root
-        waypoints.transform.SetParent(root.transform);
-        waypoints.transform.position = root.transform.position;
-        //Create two points (gameobject) and reset their position to waypoints objects
-        //Make the points children of waypoint object
-        GameObject p1 = new GameObject("Point1"); p1.transform.SetParent(waypoints.transform); p1.transform.position = root.transform.position;
-        GameObject p2 = new GameObject("Point2"); p2.transform.SetParent(waypoints.transform); p2.transform.position = root.transform.position;
-
-        //Init points list then add the points to it
-        points = new List<Transform>();
-        points.Add(p1.transform);
-        points.Add(p2.transform);
-
-
+      
     }
 
     private void Update()
     {
-        if (!isWaiting)
+        //TryHeal();
+
+    }
+
+    void UpdatePath()
+    {
+        if (seeker.IsDone())
+            seeker.StartPath(rb.position, target.position, OnPathComplete);
+
+    }
+
+    void OnPathComplete(Path p)
+    {
+        if (!p.error)
         {
-            if (IsPlayerInDetectionRange())
+            path = p;
+            currentWaypoint = 0;
+        }
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (path == null)
+            return;
+
+        if (currentWaypoint >= path.vectorPath.Count)
+        {
+            reachedEndOfPath = true;
+            return;
+        }
+        else
+        {
+            reachedEndOfPath = false;
+        }
+
+        float distanceToTarget = Vector2.Distance(rb.position, target.position);
+        if (distanceToTarget <= followDistance)
+        {
+            // Przeciwnik jest wystarczaj¹co blisko, aby pod¹¿aæ za nami
+            Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+            Vector2 force = direction * speed * Time.deltaTime;
+
+            rb.AddForce(force);
+        }
+        else
+        {
+            // Przeciwnik jest zbyt daleko, aby pod¹¿aæ za nami
+            rb.velocity = Vector2.zero;
+        }
+
+        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        if (distance < nextWaypointDistance)
+        {
+            currentWaypoint++;
+        }
+
+        if (rb.velocity.x <= 0.01f)
+        {
+            transform.localScale = new Vector3(-3.5f, 3.5f, 3.5f);
+        }
+        else if (rb.velocity.x >= -0.01f)
+        {
+            transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+
+        }
+
+        if (playerHealth != null && playerHealth.health <= 3) // Zaktualizowano sprawdzenie punktów zdrowia
+        {
+            color.zmienKolor = true;
+            speed = 900;
+        }
+        else
+        {
+
+            color.zmienKolor = false;
+            speed = 600;
+            color.PoprzedniKolor();
+        }
+
+        if (escapePoint != null)
+        { 
+            if (enemyHealth != null && enemyHealth.currentHealth <= 4)
             {
-                FollowPlayer();
-                speed = chaseSpeed;
+
+               
+
+                // Przeciwnik ucieka do punktu ucieczki
+                float escapeSpeed = speed;
+                Vector2 escapeDirection = ((Vector2)escapePoint.position - rb.position).normalized;
+                Vector2 escapeForce = escapeDirection * escapeSpeed * Time.deltaTime;
+
+                rb.AddForce(escapeForce);
+
+                float distanceToEscapePoint = Vector2.Distance(rb.position, escapePoint.position);
+                if (distanceToEscapePoint < 0.2f)
+                {
+                    // Przeciwnik dotar³ do punktu ucieczki
+                    isAtEscapePoint = true;
+                }
+
             }
-            else if (health.currentHealth <= 5)
+        }
+        if (isAtEscapePoint)
+        {
+            isHealing = true;
+
+            healTimer += Time.deltaTime;
+
+            if (healTimer >= healInterval)
             {
-                EscapeToHealingPoint();
-            }
-            else
-            {
-                MoveToNextPoint();
-                speed = 2;
+                // Leczenie przeciwnika o 1 punkt zdrowia
+                enemyHealth.Heal(1);
+
+                // Zresetuj timer
+                healTimer = 0f;
+
+                // SprawdŸ czy przeciwnik osi¹gn¹³ maksymaln¹ iloœæ zdrowia
+                if (enemyHealth.currentHealth >= enemyHealth.maxHealth)
+                {
+                    // Przeciwnik osi¹gn¹³ maksymaln¹ iloœæ zdrowia, zakoñcz leczenie
+                    isHealing = false;
+                    isAtEscapePoint = false;
+                }
             }
         }
         else
         {
-            waitTimer += Time.deltaTime;
-            animator.SetBool("Idle", true);
-
-            if (waitTimer >= waitTime)
-            {
-                isWaiting = false;
-                waitTimer = 0f;
-                MoveToNextPoint();
-                animator.SetBool("Idle", false);
-            }
+            StandardBehaviuor();
         }
+
     }
 
-    void MoveToNextPoint()
+   void StandardBehaviuor()
     {
-        //Get the next Point transform
-        Transform goalPoint = points[nextID];
-        //Flip the enemy transform to look into the point's direction
-        if (goalPoint.transform.position.x > transform.position.x)
-            transform.localScale = new Vector3(1, 1, 1);
-        else
-            transform.localScale = new Vector3(-1, 1, 1);
-        //Move the enemy towards the goal point
-        transform.position = Vector2.MoveTowards(transform.position, goalPoint.position, speed * Time.deltaTime);
-        //Check the distance between enemy and goal point to trigger next point
-        if (Vector2.Distance(transform.position, goalPoint.position) < 0.2f)
+        if (path == null)
+            return;
+
+        if (currentWaypoint >= path.vectorPath.Count)
         {
-            //Check if we are at the end of the line (make the change -1)
-            if (nextID == points.Count - 1)
-                idChangeValue = -1;
-            //Check if we are at the start of the line (make the change +1)
-            if (nextID == 0)
-                idChangeValue = 1;
+            reachedEndOfPath = true;
+            return;
+        }
+        else
+        {
+            reachedEndOfPath = false;
+        }
 
-            isWaiting = true;
-            nextID += idChangeValue;
+        float distanceToTarget = Vector2.Distance(rb.position, target.position);
+        if (distanceToTarget <= followDistance)
+        {
+            // Przeciwnik jest wystarczaj¹co blisko, aby pod¹¿aæ za nami
+            Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+            Vector2 force = direction * speed * Time.deltaTime;
+
+            rb.AddForce(force);
+        }
+        else
+        {
+            // Przeciwnik jest zbyt daleko, aby pod¹¿aæ za nami
+            rb.velocity = Vector2.zero;
+        }
+
+        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        if (distance < nextWaypointDistance)
+        {
+            currentWaypoint++;
+        }
+
+        if (rb.velocity.x <= 0.01f)
+        {
+            transform.localScale = new Vector3(-3.5f, 3.5f, 3.5f);
+        }
+        else if (rb.velocity.x >= -0.01f)
+        {
+            transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+
+        }
+
+        if (playerHealth != null && playerHealth.health <= 3) // Zaktualizowano sprawdzenie punktów zdrowia
+        {
+            color.zmienKolor = true;
+            speed = 900;
+        }
+        else
+        {
+
+            color.zmienKolor = false;
+            speed = 600;
+            color.PoprzedniKolor();
         }
     }
 
-    bool IsPlayerInDetectionRange()
-    {
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        return distanceToPlayer <= detectionRange;
-    }
 
-    void FollowPlayer()
-    {
-        if (player.position.x > transform.position.x)
-            transform.localScale = new Vector3(1, 1, 1);
-        else
-            transform.localScale = new Vector3(-1, 1, 1);
+    
 
-        transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-    }
-
-    void EscapeToHealingPoint()
-    {
-        Vector2 direction = (healingPoint.position - transform.position).normalized;
-        Vector2 movement = direction * escapeSpeed * Time.deltaTime;
-
-        transform.Translate(movement);
-
-        if (direction.x > 0)
-            transform.localScale = new Vector3(1, 1, 1);
-        else if (direction.x < 0)
-            transform.localScale = new Vector3(-1, 1, 1);
-    }
 }
 
 

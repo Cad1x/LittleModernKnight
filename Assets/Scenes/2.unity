@@ -494,7 +494,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -48.3, y: -61.3}
+  m_AnchoredPosition: {x: -48.30005, y: -61.299988}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &32450062
@@ -1553,6 +1553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8643e77da179704db2b643f35a79ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DMG: 1
 --- !u!1001 &333237513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4382,7 +4383,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 39.555603, y: -39.555573}
+  m_AnchoredPosition: {x: 39.555664, y: -39.555542}
   m_SizeDelta: {x: 79.1112, y: 79.1112}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &472774916
@@ -10846,6 +10847,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 928524884}
+    - target: {fileID: 5654180738286012813, guid: 68d6f43198addca47a35035dccabfef4, type: 3}
+      propertyPath: followDistance
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7675178920651679562, guid: 68d6f43198addca47a35035dccabfef4, type: 3}
       propertyPath: playerHealth
       value: 

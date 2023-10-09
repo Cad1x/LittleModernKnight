@@ -10,10 +10,9 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Heal(int amount)
     {
-
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
     }
 
     public void TakeDamage(int amount)

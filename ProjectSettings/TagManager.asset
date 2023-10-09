@@ -12,6 +12,7 @@ TagManager:
   - WeakPoint
   - Coin
   - Upgrade
+  - rock
   layers:
   - Default
   - TransparentFX
