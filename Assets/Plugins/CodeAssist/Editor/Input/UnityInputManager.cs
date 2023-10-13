@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -10,7 +11,7 @@ using System.Security.Cryptography;
 
 namespace Meryel.UnityCodeAssist.Editor.Input
 {
-
+    
 
     internal class UnityInputManager
     {
@@ -43,6 +44,11 @@ namespace Meryel.UnityCodeAssist.Editor.Input
                         // like this https://github.com/Unity-Technologies/UnityDataTools
                         // or this https://github.com/SeriousCache/UABE
                         var converted = GetOrCreateConvertedFile(yamlPath);
+                        if (!File.Exists(converted))
+                        {
+                            Serilog.Log.Warning("Temp file {TempFile} couldn't found for converted yaml input file. Auto Input Manager will not work!", converted);
+                            return;
+                        }
                         var rawLines = File.ReadLines(converted);
                         var yamlText = Text2Yaml.Convert(rawLines);
                         reader = new StringReader(yamlText);
@@ -57,6 +63,11 @@ namespace Meryel.UnityCodeAssist.Editor.Input
                         if (hasSemanticError)
                         {
                             var converted = GetOrCreateConvertedFile(yamlPath);
+                            if (!File.Exists(converted))
+                            {
+                                Serilog.Log.Warning("Temp file {TempFile} couldn't found for converted yaml input file. Auto Input Manager will not work!", converted);
+                                return;
+                            }
                             var rawLines = File.ReadLines(converted);
                             var yamlText = Text2Yaml.Convert(rawLines);
                             reader = new StringReader(yamlText);
@@ -64,7 +75,7 @@ namespace Meryel.UnityCodeAssist.Editor.Input
                         }
                     }
                     break;
-
+                
             }
         }
 
@@ -123,13 +134,21 @@ namespace Meryel.UnityCodeAssist.Editor.Input
 
             var axisNames = inputManager.Axes.Select(a => a.Name!).Where(n => !string.IsNullOrEmpty(n)).Distinct().ToArray();
             var axisInfos = axisNames.Select(a => inputManager.Axes.GetInfo(a)).ToArray();
-            CreateBindingsMap(out var buttonKeys, out var buttonAxis);
+            if (!CreateBindingsMap(out var buttonKeys, out var buttonAxis))
+                return;
 
-            NetMQInitializer.Publisher?.SendInputManager(
-                axisNames, axisInfos, buttonKeys!, buttonAxis!,
-                UnityEngine.Input.GetJoystickNames()
-                );
+            string[] joystickNames;
+            try
+            {
+                joystickNames = UnityEngine.Input.GetJoystickNames();
+            }
+            catch (InvalidOperationException)
+            {
+                // Occurs if user have switched active Input handling to Input System package in Player Settings.
+                joystickNames = new string[0];
+            }
 
+            NetMQInitializer.Publisher?.SendInputManager(axisNames, axisInfos, buttonKeys, buttonAxis, joystickNames);
 
             /*
             NetMQInitializer.Publisher?.SendInputManager(
@@ -145,13 +164,13 @@ namespace Meryel.UnityCodeAssist.Editor.Input
         }
 
 
-        void CreateBindingsMap(out string[]? inputKeys, out string[]? inputAxis)
+        bool CreateBindingsMap([System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out string[]? inputKeys, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)]  out string[]? inputAxis)
         {
             if (inputManager == null)
             {
                 inputKeys = null;
                 inputAxis = null;
-                return;
+                return false;
             }
 
             var dict = new Dictionary<string, string?>();
@@ -184,6 +203,7 @@ namespace Meryel.UnityCodeAssist.Editor.Input
 
             inputKeys = keys;
             inputAxis = values;
+            return true;
         }
 
 
@@ -202,7 +222,7 @@ namespace Meryel.UnityCodeAssist.Editor.Input
             else
             {
                 Serilog.Log.Debug("Converted file already exists at {Target}", convertedPath);
-            }
+            }    
 
             return convertedPath;
         }

@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Globalization;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
+using UnityEditorInternal;
 
 
 #nullable enable
@@ -11,7 +14,7 @@ using UnityEngine;
 
 namespace Meryel.UnityCodeAssist.Editor.Preferences
 {
-    public class PreferenceMonitor
+    public class PreferenceMonitor 
     {
         private static readonly Lazy<PreferenceMonitor> _instanceOfPlayerPrefs = new Lazy<PreferenceMonitor>(() => new PreferenceMonitor(true));
         private static readonly Lazy<PreferenceMonitor> _instanceOfEditorPrefs = new Lazy<PreferenceMonitor>(() => new PreferenceMonitor(false));
@@ -26,10 +29,10 @@ namespace Meryel.UnityCodeAssist.Editor.Preferences
         /// </summary>
         readonly bool isPlayerPrefs;
 
-        #region ErrorValues
+#region ErrorValues
         private readonly int ERROR_VALUE_INT = int.MinValue;
         private readonly string ERROR_VALUE_STR = "<UCA_ERR_2407201713>";
-        #endregion //ErrorValues
+#endregion //ErrorValues
 
 #pragma warning disable CS0414
         private static string pathToPrefs = String.Empty;
@@ -77,7 +80,7 @@ namespace Meryel.UnityCodeAssist.Editor.Preferences
         public void Bump()
         {
             Serilog.Log.Debug("Bumping preference {IsPlayerPrefs}", isPlayerPrefs);
-
+            
             RetrieveAndSendKeysAndValues(false);
         }
 
@@ -101,7 +104,7 @@ namespace Meryel.UnityCodeAssist.Editor.Preferences
                 pathToPrefs = @"SOFTWARE\Unity\UnityEditor\" + PlayerSettings.companyName + @"\" + PlayerSettings.productName;
             else
                 pathToPrefs = @"Software\Unity Technologies\Unity Editor 5.x";
-
+            
             platformPathPrefix = @"<CurrentUser>";
             entryAccessor = new WindowsPrefStorage(pathToPrefs);
 #elif UNITY_EDITOR_OSX
@@ -181,7 +184,7 @@ namespace Meryel.UnityCodeAssist.Editor.Preferences
         }
 
 
-
+        
 
         private string[]? GetKeys(bool reloadKeys)
         {
@@ -285,10 +288,17 @@ namespace Meryel.UnityCodeAssist.Editor.Preferences
                 values[i] = string.Empty;
                 if (isPlayerPrefs)
                 {
-                    // EditorPrefs gives error for some keys
-                    Serilog.Log.Error("Invalid {PreferenceType} '{Key}' at {Location}, str:{StringValue}, int:{IntegerValue}, float:{FloatValue}, bool:{BooleanValue}",
-                        (isPlayerPrefs ? "PlayerPrefs" : "EditorPrefs"), key, nameof(GetKeyValues),
-                        stringValue, intValue, floatValue, boolValue);
+                    // Keys with ? causing problems, just ignore them
+                    if (key.Contains("?"))
+                        Serilog.Log.Debug("Invalid {PreferenceType} KEY WITH '?', '{Key}' at {Location}, str:{StringValue}, int:{IntegerValue}, float:{FloatValue}, bool:{BooleanValue}",
+                            (isPlayerPrefs ? "PlayerPrefs" : "EditorPrefs"), key, nameof(GetKeyValues),
+                            stringValue, intValue, floatValue, boolValue);
+
+                    else
+                        // EditorPrefs gives error for some keys
+                        Serilog.Log.Error("Invalid {PreferenceType} '{Key}' at {Location}, str:{StringValue}, int:{IntegerValue}, float:{FloatValue}, bool:{BooleanValue}",
+                            (isPlayerPrefs ? "PlayerPrefs" : "EditorPrefs"), key, nameof(GetKeyValues),
+                            stringValue, intValue, floatValue, boolValue);
                 }
             }
 
@@ -309,7 +319,7 @@ namespace Meryel.UnityCodeAssist.Editor.Preferences
 
         private void LoadKeys(out string[]? userDef, out string[]? unityDef, bool reloadKeys)
         {
-            if (entryAccessor == null)
+            if(entryAccessor == null)
             {
                 userDef = null;
                 unityDef = null;

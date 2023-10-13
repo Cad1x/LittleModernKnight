@@ -1,7 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
-using UnityEditor;
+using System.Linq;
 using UnityEngine;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 
 
 #nullable enable
@@ -82,7 +86,12 @@ namespace Meryel.UnityCodeAssist.Editor
             var type = GetType123(typeName);
 
             if (type == null)
+            {
+                // Possibly a class has been created in Visual Studio, and these changes are not reflected in Unity domain yet
+                // We can force Unity to recompile and get the type, but since there will be no instance of that type, it won't be of any use, will be just a performance burden
+                Serilog.Log.Debug("{Type} type couldn't be found", typeName);
                 return false;
+            }
 
 
             var obj = GetObjectOfType(type, out var requestVerboseType);
@@ -100,22 +109,24 @@ namespace Meryel.UnityCodeAssist.Editor
                 return true;
             }
 
+            Serilog.Log.Debug("Instance of {Type} type couldn't be found", typeName);
             return false;
         }
 
         static UnityEngine.Object? GetObjectOfType(Type type, out bool requestVerboseType)
         {
+            requestVerboseType = false;
             var isMonoBehaviour = type.IsSubclassOf(typeof(MonoBehaviour));
             var isScriptableObject = type.IsSubclassOf(typeof(ScriptableObject));
 
             if (!isMonoBehaviour && !isScriptableObject)
             {
-                Serilog.Log.Warning("{Type} is not a valid Unity object", type.ToString());
-                requestVerboseType = true;
+                // Possibly a class's base class changed from none to MonoBehaviour in Visual Studio, and these changes are not reflected in Unity domain yet
+                // We can force Unity to recompile and get the type correctly, but since there will be no instance of that type, it won't be of any use, will be just a performance burden
+                Serilog.Log.Debug("{Type} is not a valid Unity object", type.ToString());
+                //requestVerboseType = true;
                 return null;
             }
-            requestVerboseType = false;
-
 
             UnityEngine.Object? obj;
 
@@ -132,7 +143,7 @@ namespace Meryel.UnityCodeAssist.Editor
             obj = getObjectToSend(Selection.activeObject, type);
             if (obj != null)
                 return obj;
-
+            
 
             //**--check source code of this, for sorting
             var filteredArray = Selection.GetFiltered(type, SelectionMode.Unfiltered);
@@ -166,8 +177,6 @@ namespace Meryel.UnityCodeAssist.Editor
             }
             catch (Exception ex)
             {
-                //var isMonoBehaviour = type.IsSubclassOf(typeof(MonoBehaviour));
-                //var isScriptableObject = type.IsSubclassOf(typeof(ScriptableObject));
                 Serilog.Log.Warning(ex, "FindObjectOfType/FindAnyObjectByType failed for {Type}, mb:{isMB}, so:{isSO}", type.ToString(), isMonoBehaviour, isScriptableObject);
             }
 
@@ -253,7 +262,7 @@ namespace Meryel.UnityCodeAssist.Editor
                 //var monoBehaviourType = typeof(MonoBehaviour);
                 //if (type == monoBehaviourType || type.IsSubclassOf(monoBehaviourType))
                 //    return true;
-
+                
                 //else if(type is interface)//**--
 
                 return false;
