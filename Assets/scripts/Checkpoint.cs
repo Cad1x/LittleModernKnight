@@ -4,20 +4,34 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    private CheckpointManager checkpointManager;
+    public Color greenColor = Color.green; // Kolor zielony do ustawienia w inspektorze
 
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        checkpointManager = GameObject.FindObjectOfType<CheckpointManager>();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player1"))
+        if (other.CompareTag("Player1"))
         {
-            // Aktywuj checkpoint, gdy gracz dotknie checkpointu
-            checkpointManager.ActivateCheckpoint(transform.position);
+            // Oznacz checkpoint jako aktualny checkpoint gracza
+            // PlayerRespawn.SetCheckpoint(transform.position);
+
+            // Zmiana koloru na zielony
+            ChangeColorToGreen();
         }
     }
+
+    public void ChangeColorToGreen()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+        {
+            // Zmieñ kolor sprite'a na zielony
+            spriteRenderer.color = greenColor;
+        }
+
+
+    }
+
+
+
 
 }

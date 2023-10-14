@@ -10,6 +10,8 @@ public class Button3 : MonoBehaviour
     private SpriteRenderer buttonRenderer;
     private Color originalColor;
     private bool isHiddenBlockActive = false;
+    public float opoznienie = 4f;
+
 
     private void Start()
     {
@@ -24,7 +26,7 @@ public class Button3 : MonoBehaviour
             isHiddenBlockActive = true;
             hiddenBlock.SetActive(true); // Po kolizji z "Rock", aktywuj ukrywany blok
             buttonRenderer.color = Color.green;
-            StartCoroutine(DeactivateHiddenBlockAfterDelay(4f));
+            StartCoroutine(DeactivateHiddenBlockAfterDelay(opoznienie));
         }
     }
 

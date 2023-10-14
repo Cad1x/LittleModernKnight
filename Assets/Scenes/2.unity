@@ -769,7 +769,7 @@ GameObject:
   - component: {fileID: 98904182}
   m_Layer: 0
   m_Name: Spike_B_5 (2)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1345,7 +1345,7 @@ GameObject:
   - component: {fileID: 229408234}
   m_Layer: 0
   m_Name: Spike_B_5
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4027,7 +4027,7 @@ GameObject:
   - component: {fileID: 446897074}
   m_Layer: 0
   m_Name: SpikesAll
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5403,7 +5403,7 @@ GameObject:
   - component: {fileID: 718329315}
   m_Layer: 0
   m_Name: Spike_B_5 (5)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5571,7 +5571,7 @@ GameObject:
   - component: {fileID: 757942019}
   - component: {fileID: 757942018}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: nextLvl
   m_TagString: NextLVL
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5586,9 +5586,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 757942017}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94fa70512cec4b14c96d548c57ce1492, type: 3}
+  m_Script: {fileID: 11500000, guid: 35cde2cac6b52804788fbfaab30f9351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneBuildIndex: 4
 --- !u!61 &757942019
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5623,7 +5624,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757942017}
   m_LocalRotation: {x: -0, y: -0, z: -0.7133192, w: 0.70083934}
-  m_LocalPosition: {x: 15.29, y: 4.96, z: 0.027775764}
+  m_LocalPosition: {x: 14.97, y: 5.54, z: 0.027775764}
   m_LocalScale: {x: 0.14034374, y: 11.367844, z: 1.2475}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6161,7 +6162,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1447695714574993840, guid: d23259671f2fff94db04534e51adb0a8, type: 3}
   m_PrefabInstance: {fileID: 1447695715433260005}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1961828170}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cdda3930cd896f34785f5602d05df33a, type: 3}
@@ -6593,7 +6594,7 @@ GameObject:
   - component: {fileID: 1036169459}
   m_Layer: 0
   m_Name: Spike_B_5 (3)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6700,7 +6701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -867.3, y: 429.88}
+  m_AnchoredPosition: {x: -867.3, y: 450}
   m_SizeDelta: {x: 56.71, y: 56.632}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1044894821
@@ -6812,7 +6813,7 @@ GameObject:
   - component: {fileID: 1059959710}
   m_Layer: 0
   m_Name: Spike_B_5 (4)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7286,7 +7287,7 @@ GameObject:
   - component: {fileID: 1182674701}
   m_Layer: 0
   m_Name: Spikes (1)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8820,7 +8821,7 @@ GameObject:
   - component: {fileID: 1604814085}
   m_Layer: 0
   m_Name: Spike_B_5 (6)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8905,7 +8906,7 @@ GameObject:
   - component: {fileID: 1628609076}
   m_Layer: 0
   m_Name: Spikes
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9252,7 +9253,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695707445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.09, y: -10.669999, z: -10}
+  m_LocalPosition: {x: -12.389999, y: -10.559999, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9440,7 +9441,7 @@ GameObject:
   - component: {fileID: 1741510043}
   m_Layer: 0
   m_Name: Spike_B_5
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10123,6 +10124,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1961828170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1447695714574993839, guid: d23259671f2fff94db04534e51adb0a8, type: 3}
+  m_PrefabInstance: {fileID: 1447695715433260005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1961828181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961828170}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3d69020d22e6e40a2970a4c0f5cfb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &1981635394
 GameObject:
   m_ObjectHideFlags: 0
@@ -10334,7 +10353,7 @@ GameObject:
   - component: {fileID: 2065382215}
   m_Layer: 0
   m_Name: Spike_B_5 (1)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10639,7 +10658,7 @@ GameObject:
   - component: {fileID: 2113396822}
   m_Layer: 0
   m_Name: Spike_B_5 (1)
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10781,11 +10800,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1447695714574993841, guid: d23259671f2fff94db04534e51adb0a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.01
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 1447695714574993841, guid: d23259671f2fff94db04534e51adb0a8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.9
+      value: -11.79
       objectReference: {fileID: 0}
     - target: {fileID: 1447695714574993841, guid: d23259671f2fff94db04534e51adb0a8, type: 3}
       propertyPath: m_LocalPosition.z

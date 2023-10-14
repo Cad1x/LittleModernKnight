@@ -13,6 +13,8 @@ TagManager:
   - Coin
   - Upgrade
   - rock
+  - Checkpoint
+  - Spike
   layers:
   - Default
   - TransparentFX

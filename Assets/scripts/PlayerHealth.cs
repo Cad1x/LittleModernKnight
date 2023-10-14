@@ -5,7 +5,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int health;
     public int maxHealth = 10;
-
+    public PlayerRespawn respawn;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +31,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void ResetGame()
     {
+
+        
         // Poni¿ej wybieramy, której sceny chcemy u¿yæ do zresetowania gry.
         // Jeœli u¿ywasz pojedynczej sceny, wstaw tutaj nazwê bie¿¹cej sceny.
         // Jeœli korzystasz z wielu scen, wprowadŸ odpowiedni¹ nazwê sceny do zresetowania.
@@ -38,6 +40,9 @@ public class PlayerHealth : MonoBehaviour
 
         // Resetujemy grê, ³aduj¹c ponownie bie¿¹c¹ scenê.
         SceneManager.LoadScene(currentSceneName);
+
+        transform.position = respawn.respawnPoint;
+
     }
 
 }

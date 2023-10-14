@@ -123,7 +123,7 @@ public class BehaviourTree : MonoBehaviour
         {
 
             color.zmienKolor = false;
-            speed = 600;
+            speed = 300;
             color.PoprzedniKolor();
         }
 
@@ -135,7 +135,7 @@ public class BehaviourTree : MonoBehaviour
                
 
                 // Przeciwnik ucieka do punktu ucieczki
-                float escapeSpeed = speed;
+                float escapeSpeed = 700;
                 Vector2 escapeDirection = ((Vector2)escapePoint.position - rb.position).normalized;
                 Vector2 escapeForce = escapeDirection * escapeSpeed * Time.deltaTime;
 
@@ -235,7 +235,7 @@ public class BehaviourTree : MonoBehaviour
         {
 
             color.zmienKolor = false;
-            speed = 600;
+            speed = 300;
             color.PoprzedniKolor();
         }
     }
