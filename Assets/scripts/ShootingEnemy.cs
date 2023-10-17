@@ -14,7 +14,8 @@ public class ShootingEnemy : MonoBehaviour
     private float distance;
 
     private float timer;
-    private List<GameObject> bullets = new List<GameObject>();
+    private GameObject currentBullet; // Przechowuje referencjê do aktualnie istniej¹cego pocisku
+
     private float initialForce = 20f;
     private float updatedForce = 5f;
 
@@ -25,19 +26,23 @@ public class ShootingEnemy : MonoBehaviour
 
     private void Update()
     {
-        //if (Vector2.Distance(transform.position, target.position) < minDistance)
-        //{
-        //    transform.position = Vector2.MoveTowards(transform.position, target.position, -speed * Time.deltaTime);
-        //}
-
         distance = Vector2.Distance(transform.position, player.transform.position);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, triggerDist);
+
         if (hit.collider != null && hit.collider.CompareTag("Player1"))
         {
             timer += Time.deltaTime;
             if (timer > 2)
             {
                 timer = 0;
+
+                // Jeœli istnieje poprzedni pocisk, usuñ go
+                if (currentBullet != null)
+                {
+                    Destroy(currentBullet);
+                }
+
+                // Strzelaj nowym pociskiem
                 Shoot();
             }
         }
@@ -46,16 +51,15 @@ public class ShootingEnemy : MonoBehaviour
         {
             ClearBullets();
         }
-
     }
 
     void Shoot()
     {
-        GameObject newBullet = Instantiate(bullet, bulletPos.position, Quaternion.identity);
-        bullets.Add(newBullet);
+        // Twórz nowy pocisk
+        currentBullet = Instantiate(bullet, bulletPos.position, Quaternion.identity);
 
         // Ustaw si³ê strza³u na pocz¹tkow¹ lub zaktualizowan¹ wartoœæ
-        Projectile projectileScript = newBullet.GetComponent<Projectile>();
+        Projectile projectileScript = currentBullet.GetComponent<Projectile>();
         if (transform.hasChanged)
         {
             projectileScript.force = updatedForce;
@@ -70,10 +74,10 @@ public class ShootingEnemy : MonoBehaviour
 
     void ClearBullets()
     {
-        foreach (GameObject bullet in bullets)
+        // Jeœli istnieje poprzedni pocisk, usuñ go
+        if (currentBullet != null)
         {
-            Destroy(bullet);
+            Destroy(currentBullet);
         }
-        bullets.Clear();
     }
 }
