@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerAnim : MonoBehaviour
 {
 
-
+    public ThrowingRock throwingRock;
     private Animator anim;
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class PlayerAnim : MonoBehaviour
             anim.SetBool("isJumping", true);
         }
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (throwingRock.CanThrow() == true && Input.GetKey(KeyCode.Mouse0))
         {
             anim.SetTrigger("throw");
         }

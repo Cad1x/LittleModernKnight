@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,18 +6,26 @@ public class PlayerHealth : MonoBehaviour
 {
     public int health;
     public int maxHealth = 10;
+    public float flashDuration = 0.2f; // Czas, przez który kolor bêdzie zmieniony na bia³y
+    public Color flashColor = Color.white; // Kolor bia³y
     public PlayerRespawn respawn;
+    private Color originalColor; // Oryginalny kolor gracza
+    private SpriteRenderer playerRenderer; // Komponent Renderer
 
-    // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
+
+        // Pobierz komponent Renderer
+        playerRenderer = GetComponent<SpriteRenderer>();
+
+        // Zapamiêtaj oryginalny kolor
+        originalColor = playerRenderer.color;
     }
 
-    // Update is called once per frame
     void Update()
     {
-
+        // Tu mo¿esz umieœciæ inne logiki zwi¹zane z ¿yciem gracza
     }
 
     public void TakeDamage(int amount)
@@ -27,22 +36,29 @@ public class PlayerHealth : MonoBehaviour
             Destroy(gameObject, 0.2f);
             ResetGame();
         }
+        else
+        {
+            // Jeœli gracz otrzyma³ obra¿enia, uruchom coroutine zmiany koloru
+            StartCoroutine(FlashWhite());
+        }
+    }
+
+    IEnumerator FlashWhite()
+    {
+        // Zmieñ kolor na bia³y
+        playerRenderer.color = flashColor;
+
+        // Poczekaj przez okreœlony czas
+        yield return new WaitForSeconds(flashDuration);
+
+        // Wróæ do oryginalnego koloru
+        playerRenderer.color = originalColor;
     }
 
     private void ResetGame()
     {
-
-        
-        // Poni¿ej wybieramy, której sceny chcemy u¿yæ do zresetowania gry.
-        // Jeœli u¿ywasz pojedynczej sceny, wstaw tutaj nazwê bie¿¹cej sceny.
-        // Jeœli korzystasz z wielu scen, wprowadŸ odpowiedni¹ nazwê sceny do zresetowania.
         string currentSceneName = SceneManager.GetActiveScene().name;
-
-        // Resetujemy grê, ³aduj¹c ponownie bie¿¹c¹ scenê.
         SceneManager.LoadScene(currentSceneName);
-
         transform.position = respawn.respawnPoint;
-
     }
-
 }
