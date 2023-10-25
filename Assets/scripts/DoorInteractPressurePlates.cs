@@ -8,10 +8,14 @@ public class DoorInteractPressurePlates : MonoBehaviour
     private IDoor door;
     private float timer;
 
+    private Renderer renderer; // Dodany Renderer
+
     private void Awake()
     {
         door = doorGameObject.GetComponent<IDoor>();
+        renderer = GetComponent<Renderer>(); // Inicjalizacja komponentu Renderer
     }
+
     private void Update()
     {
         if (timer > 0)
@@ -20,25 +24,10 @@ public class DoorInteractPressurePlates : MonoBehaviour
             if (timer <= 0f)
             {
                 door.CloseDoor();
+                SetColor(Color.white); // Po zamkniêciu drzwi, przywróæ domyœlny kolor
             }
         }
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.GetComponent<playerMovement>() != null)
-    //    {
-    //        door.OpenDoor();
-    //        timer = 1f;
-    //    }
-    //}
-
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    if (collision.GetComponent<playerMovement>() != null)
-    //    {
-    //        timer = 1f;
-    //    }
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -46,6 +35,7 @@ public class DoorInteractPressurePlates : MonoBehaviour
         {
             door.OpenDoor();
             timer = 1f;
+            SetColor(Color.green); // Zmieñ kolor na zielony po otwarciu drzwi
         }
     }
 
@@ -57,4 +47,12 @@ public class DoorInteractPressurePlates : MonoBehaviour
         }
     }
 
+    private void SetColor(Color color)
+    {
+        // Ustaw kolor obiektu
+        if (renderer != null)
+        {
+            renderer.material.color = color;
+        }
+    }
 }

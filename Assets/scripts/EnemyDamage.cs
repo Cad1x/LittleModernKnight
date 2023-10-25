@@ -19,7 +19,7 @@ public class EnemyDamage : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitUntil(() => isPlayerInContact); // Czekaj, a¿ gracz wejdzie w kontakt z przeciwnikiem
+            yield return new WaitUntil(() => isPlayerInContact); 
             playerHealth.TakeDamage(damage);
             yield return new WaitForSeconds(damageInterval);
         }

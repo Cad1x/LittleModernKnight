@@ -19,7 +19,7 @@ public class BehaviourTree : MonoBehaviour
     private bool isHealing = false;
     private bool isAtEscapePoint = false;
     private float healTimer = 0f;
-    private float healInterval = 1f;
+    private float healInterval = 2.5f;
 
 
     Path path;

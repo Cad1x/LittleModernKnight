@@ -23,7 +23,7 @@ public class SightEnemy : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
-        // Zmieniono na tag "Player1"
+        
         player = GameObject.FindGameObjectWithTag("Player1").transform;
     }
 

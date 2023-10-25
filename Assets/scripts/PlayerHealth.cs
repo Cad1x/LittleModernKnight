@@ -25,7 +25,6 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        // Tu mo¿esz umieœciæ inne logiki zwi¹zane z ¿yciem gracza
     }
 
     public void TakeDamage(int amount)

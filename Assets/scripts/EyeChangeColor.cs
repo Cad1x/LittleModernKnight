@@ -28,7 +28,7 @@ public class EyeChangeColor : MonoBehaviour
         if (zmienKolor)
         {
             // Zmien kolor sprite'a na czerwony
-            spriteRenderer.color = Color.red;
+            spriteRenderer.color = Color.yellow;
 
             // Opcjonalnie: Zresetuj zmienn¹ zmienKolor, aby unikn¹æ ci¹g³ej zmiany koloru w ka¿dej klatce
             zmienKolor = false;
