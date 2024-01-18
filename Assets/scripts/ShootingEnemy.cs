@@ -36,13 +36,11 @@ public class ShootingEnemy : MonoBehaviour
             {
                 timer = 0;
 
-                // Jeœli istnieje poprzedni pocisk, usuñ go
                 if (currentBullet != null)
                 {
                     Destroy(currentBullet);
                 }
 
-                // Strzelaj nowym pociskiem
                 Shoot();
             }
         }
@@ -55,15 +53,12 @@ public class ShootingEnemy : MonoBehaviour
 
     void Shoot()
     {
-        // Twórz nowy pocisk
         currentBullet = Instantiate(bullet, bulletPos.position, Quaternion.identity);
 
-        // Ustaw si³ê strza³u na pocz¹tkow¹ lub zaktualizowan¹ wartoœæ
         Projectile projectileScript = currentBullet.GetComponent<Projectile>();
         if (transform.hasChanged)
         {
             projectileScript.force = updatedForce;
-            // Resetuj flagê zmiany po³o¿enia przeciwnika
             transform.hasChanged = false;
         }
         else

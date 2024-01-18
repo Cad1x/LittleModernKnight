@@ -5,7 +5,7 @@ public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 8;
     public int currentHealth;
-    private Material material; // Materia³ obiektu, aby móc zmieniaæ kolor
+    private Material material; 
 
     void Start()
     {
@@ -23,12 +23,12 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= amount;
         if (currentHealth <= 0)
         {
-            StartCoroutine(ChangeColorForSeconds(Color.red, 0.5f)); // Zmiana koloru na czerwony przez 0.5 sekundy
-            Destroy(gameObject, 0.099f); // Zniszcz obiekt po 0.5 sekundy
+            StartCoroutine(ChangeColorForSeconds(Color.red, 0.5f)); 
+            Destroy(gameObject, 0.099f);
         }
         else
         {
-            StartCoroutine(ChangeColorForSeconds(Color.red, 0.1f)); // Zmiana koloru na czerwony przez 0.1 sekundy po otrzymaniu obra¿eñ
+            StartCoroutine(ChangeColorForSeconds(Color.red, 0.1f)); 
         }
     }
 
@@ -36,6 +36,6 @@ public class EnemyHealth : MonoBehaviour
     {
         material.color = color;
         yield return new WaitForSeconds(seconds);
-        material.color = Color.white; // Powrót do koloru bia³ego
+        material.color = Color.white; 
     }
 }

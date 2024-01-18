@@ -14,11 +14,9 @@ public class EnemyAI : MonoBehaviour
     int currentWaypoint = 0;
     bool reachedEndOfPath = false;
 
-
     Seeker seeker;
     Rigidbody2D rb;
 
-    // Start is called before the first frame update
     void Start()
     {
         seeker = GetComponent<Seeker>();
@@ -63,7 +61,6 @@ public class EnemyAI : MonoBehaviour
         float distanceToTarget = Vector2.Distance(rb.position, target.position);
         if (distanceToTarget <= followDistance)
         {
-            // Przeciwnik jest wystarczaj¹co blisko, aby pod¹¿aæ za nami
             Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
             Vector2 force = direction * speed * Time.deltaTime;
 
@@ -71,7 +68,6 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            // Przeciwnik jest zbyt daleko, aby pod¹¿aæ za nami
             rb.velocity = Vector2.zero;
         }
 

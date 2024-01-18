@@ -4,9 +4,9 @@ public class ThrowingRock : MonoBehaviour
 {
     public GameObject stonePrefab;
     public float throwForce = 10f;
-    public float throwCooldown = 1f; // Czas oczekiwania miêdzy rzutami
-    public float stoneLifetime = 1f; // Czas ¿ycia kamienia
-    private float lastThrowTime; // Czas ostatniego rzutu
+    public float throwCooldown = 1f; 
+    public float stoneLifetime = 1f; 
+    private float lastThrowTime; 
     private GameObject currentStone;
 
     void Update()
@@ -14,13 +14,12 @@ public class ThrowingRock : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && CanThrow())
         {
             Throw();
-            lastThrowTime = Time.time; // Aktualizuj czas ostatniego rzutu
+            lastThrowTime = Time.time; 
         }
     }
 
     public bool CanThrow()
     {
-        // SprawdŸ, czy min¹³ odpowiedni czas od ostatniego rzutu
         return Time.time - lastThrowTime >= throwCooldown;
     }
 
@@ -57,7 +56,6 @@ public class ThrowingRock : MonoBehaviour
         if (collision.gameObject.CompareTag("WeakPoint"))
         {
             Destroy(currentStone);
-            // Dodaj tutaj dodatkow¹ logikê, jeœli chcesz
         }
     }
 }

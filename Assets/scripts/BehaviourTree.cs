@@ -113,7 +113,7 @@ public class BehaviourTree : MonoBehaviour
 
         }
 
-        if (playerHealth != null && playerHealth.health <= 3) // Zaktualizowano sprawdzenie punktów zdrowia
+        if (playerHealth != null && playerHealth.health <= 3) 
         {
             color.zmienKolor = true;
             speed = 900;
@@ -133,7 +133,6 @@ public class BehaviourTree : MonoBehaviour
 
                
 
-                // Przeciwnik ucieka do punktu ucieczki
                 float escapeSpeed = 700;
                 Vector2 escapeDirection = ((Vector2)escapePoint.position - rb.position).normalized;
                 Vector2 escapeForce = escapeDirection * escapeSpeed * Time.deltaTime;
@@ -143,7 +142,6 @@ public class BehaviourTree : MonoBehaviour
                 float distanceToEscapePoint = Vector2.Distance(rb.position, escapePoint.position);
                 if (distanceToEscapePoint < 0.2f)
                 {
-                    // Przeciwnik dotar³ do punktu ucieczki
                     isAtEscapePoint = true;
                 }
 
@@ -157,16 +155,12 @@ public class BehaviourTree : MonoBehaviour
 
             if (healTimer >= healInterval)
             {
-                // Leczenie przeciwnika o 1 punkt zdrowia
                 enemyHealth.Heal(1);
 
-                // Zresetuj timer
                 healTimer = 0f;
 
-                // SprawdŸ czy przeciwnik osi¹gn¹³ maksymaln¹ iloœæ zdrowia
                 if (enemyHealth.currentHealth >= enemyHealth.maxHealth)
                 {
-                    // Przeciwnik osi¹gn¹³ maksymaln¹ iloœæ zdrowia, zakoñcz leczenie
                     isHealing = false;
                     isAtEscapePoint = false;
                 }

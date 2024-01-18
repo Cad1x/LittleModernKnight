@@ -24,11 +24,8 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
-
-
     void Awake()
     {
-
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -37,7 +34,6 @@ public class playerMovement : MonoBehaviour
         animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         horizontal = Input.GetAxisRaw("Horizontal");
 
-
         animator.SetFloat("yVelocity", rb.velocity.y);
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
@@ -45,10 +41,7 @@ public class playerMovement : MonoBehaviour
 
         Flip();
 
-
-
     }
-
 
     void GroundCheck()
     {
@@ -87,7 +80,6 @@ public class playerMovement : MonoBehaviour
         }
     }
 
-
     void Jump()
     {
         if (isGrounded)
@@ -95,7 +87,6 @@ public class playerMovement : MonoBehaviour
 
             rb.velocity = Vector2.up * Mathf.Sqrt(jumpPower * -2f * (gravity * gravityScale));
         }
-
     }
-
 }
+
